@@ -1,0 +1,29 @@
+name: GitHub Actions Test
+
+on:
+  push:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Print Email Address
+        run: echo "21f2000588@ds.study.iitm.ac.in"
+
+      - name: Fetch ISS location data
+        run: | # Python script
+          curl -s http://api.open-notify.org/iss-now.json | jq > iss-location.json
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add iss-location.json
+          git commit -m "Updated ISS location data [skip ci]" || exit 0
+          git push
