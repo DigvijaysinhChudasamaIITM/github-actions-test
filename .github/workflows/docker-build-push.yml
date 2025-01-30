@@ -1,9 +1,9 @@
 name: Build and Push Docker Image
 
-on: 
+on:
   push:
     branches:
-      - main
+      - main  # Adjust to your default branch
 
 jobs:
   build-and-push:
@@ -11,13 +11,13 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Build Docker image
-        run: docker build -t docker.io/YOUR_DOCKER_HUB_USERNAME/py-hello:21f2000588 .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/myapp:latest .
 
-      - name: Push Docker image to Docker Hub
-        run: docker push docker.io/YOUR_DOCKER_HUB_USERNAME/py-hello:21f2000588
+      - name: Push Docker image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/myapp:latest
