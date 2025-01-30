@@ -9,26 +9,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # 🔹 This grants permission to push changes
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}  # 🔹 Use GitHub token for authentication
 
-      - name: Print Email Address
-        run: echo "21f2000588@ds.study.iitm.ac.in"
+      - name: 21f2000588@ds.study.iitm.ac.in  # 🔹 This step contains your email
+        run: echo "Hello, world!"
 
-      - name: Fetch ISS location data
-        run: |  # Fetch ISS location
-          curl -s http://api.open-notify.org/iss-now.json | jq > iss-location.json
-
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add iss-location.json
-          git commit -m "Updated ISS location data [skip ci]" || exit 0
-          git push
+      - name: Print Confirmation
+        run: echo "Workflow executed successfully"
